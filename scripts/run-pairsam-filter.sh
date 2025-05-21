@@ -25,8 +25,8 @@ CHR_SIZES=$3
 UNMAPPED_SAMPAIRS=${OUTPREFIX}.unmapped.sam.pairs.gz
 DEDUP_PAIRS=${OUTPREFIX}.dedup.pairs.gz
 LOSSLESS_BAM=${OUTPREFIX}.lossless.bam
-TEMPFILE=temp.gz
-TEMPFILE1=temp1.gz
+TEMPFILE=${OUTPREFIX}.temp.gz
+TEMPFILE1=${OUTPREFIX}.temp1.gz
 
 ## Generate lossless bam
 pairtools split --output-sam ${LOSSLESS_BAM} ${PAIRSAM}
@@ -43,6 +43,8 @@ pairtools split --output-pairs ${TEMPFILE1} ${TEMPFILE}
 pairtools select 'True' --chrom-subset ${CHR_SIZES} -o ${DEDUP_PAIRS} ${TEMPFILE1}
 
 pairix ${DEDUP_PAIRS}  # sanity check & indexing    
+
+rm -f ${TEMPFILE} ${TEMPFILE1}
 
 
 
